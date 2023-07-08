@@ -46,6 +46,7 @@ export default function Login() {
 
       <Form onSubmit={submitForm} page="auth">
         <Input
+          data-test="email"
           name="email"
           placeholder="E-mail"
           value={formData.email}
@@ -53,6 +54,7 @@ export default function Login() {
         />
 
         <Input
+          data-test="password"
           type="password"
           name="password"
           placeholder="Senha"
@@ -60,7 +62,7 @@ export default function Login() {
           onChange={updateForm}
         />
 
-        <Button type="submit">
+        <Button type="submit" data-test="sign-in-submit">
           {"Entrar"}
         </Button>
       </Form>

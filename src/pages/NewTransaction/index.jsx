@@ -47,7 +47,7 @@ export default function NewTransaction() {
       navigate("/");
     }
 
-  }, [])
+  }, []);
 
   return (
     <Container>
@@ -57,6 +57,7 @@ export default function NewTransaction() {
 
       <Form onSubmit={submitForm} page="option">
         <Input
+          data-test="registry-amount-input"
           placeholder="Valor"
           name="value"
           value={formData.value}
@@ -64,16 +65,17 @@ export default function NewTransaction() {
         />
 
         <Input 
+          data-test="registry-name-input"
           placeholder="Descrição"
           name="description"
           value={formData.description}
           onChange={updateForm}
         />
 
-        <Button type="submit">
+        <Button type="submit" data-test="registry-save">
           {`Salvar ${params.tipo}`}
         </Button>
       </Form>
     </Container>
-  )
+  );
 }

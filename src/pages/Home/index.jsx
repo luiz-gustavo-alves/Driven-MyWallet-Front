@@ -23,7 +23,7 @@ export default function Home() {
         .catch((err) => alert(err.message));
     }
 
-  }, [auth.token, ]);
+  }, []);
 
   const logout = () => {
 
@@ -38,9 +38,9 @@ export default function Home() {
   return (
     <Container>
       <UserContent>
-        <Title>Olá, {auth.username}</Title>
-        <Button onClick={logout} title="Sair">
-          <img src="./src/assets/images/exit-door.svg"></img>
+        <Title data-test="user-name">Olá, {auth.username}</Title>
+        <Button onClick={logout} title="Sair" data-test="logout">
+          <img src="../../assets/images/exit-door.svg"></img>
         </Button>
       </UserContent>
 
@@ -48,8 +48,8 @@ export default function Home() {
 
       <Footer>
         <Option>
-          <Button onClick={() => navigate("/nova-transacao/entrada")} title="Nova Entrada">
-            <img src="./src/assets/images/plus.svg"></img>
+          <Button onClick={() => navigate("/nova-transacao/entrada")} title="Nova Entrada" data-test="new-income">
+            <img src="../../assets/images/plus.svg"></img>
           </Button>
 
           <StyledLink to="/nova-transacao/entrada" title="Nova Entrada">
@@ -58,8 +58,8 @@ export default function Home() {
         </Option>
 
         <Option>
-          <Button onClick={() => navigate("/nova-transacao/saida")} title="Nova Saída">
-            <img src="./src/assets/images/minus.svg"></img>
+          <Button onClick={() => navigate("/nova-transacao/saida")} title="Nova Saída" data-test="new-expense">
+            <img src="../../assets/images/minus.svg"></img>
           </Button>
 
           <StyledLink to="/nova-transacao/saida" title="Nova Saída">

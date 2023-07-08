@@ -14,16 +14,16 @@ export default function Transactions(props) {
               <Transaction key={index}>
                 <LeftContent>
                   <Date>{transaction.date}</Date>
-                  <Title>{transaction.description}</Title>
+                  <Title data-test="registry-name">{transaction.description}</Title>
                 </LeftContent>
-                <Value type={transaction.type}>{transaction.value.toFixed(2)}</Value>
+                <Value type={transaction.type} data-test="registry-amount">{transaction.value.toFixed(2)}</Value>
               </Transaction>
             ))}
           </Content>
 
           <Footer>
             {"SALDO"}
-            <Value total={total}>
+            <Value total={total} data-test="total-amount">
               {total.toFixed(2)}
             </Value>
           </Footer>

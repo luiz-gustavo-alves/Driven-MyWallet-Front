@@ -46,6 +46,7 @@ export default function Register() {
 
       <Form onSubmit={submitForm} page="auth">
         <Input
+          data-test="name"
           placeholder="Nome"
           name="name"
           value={formData.name}
@@ -53,6 +54,7 @@ export default function Register() {
         />
 
         <Input
+          data-test="email"
           placeholder="E-mail"
           name="email"
           value={formData.email}
@@ -60,6 +62,7 @@ export default function Register() {
         />
 
         <Input
+          data-test="password"
           placeholder="Senha"
           name="password"
           type="password"
@@ -68,6 +71,7 @@ export default function Register() {
         />
 
         <Input
+          data-test="conf-password"
           placeholder="Confirme a senha"
           name="confirmPassword"
           type="password"
@@ -75,7 +79,7 @@ export default function Register() {
           onChange={updateForm}
         />
 
-        <Button type="submit">
+        <Button type="submit" data-test="sign-up-submit">
           {"Cadastrar"}
           </Button>
       </Form>
