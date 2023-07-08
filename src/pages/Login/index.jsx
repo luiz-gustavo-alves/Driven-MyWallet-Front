@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Container, Form, Input, Button, StyledLink } from "../../components/AuthComponents";
+import { Container, Form, Input, Button, StyledLink } from "../../components/FormComponents";
 
 import API from "../../services/api";
 import useAuth from "../../hooks/useAuth";
@@ -44,7 +44,7 @@ export default function Login() {
         <h1>MyWallet</h1>
       </StyledLink>
 
-      <Form onSubmit={submitForm}>
+      <Form onSubmit={submitForm} page="auth">
         <Input
           name="email"
           placeholder="E-mail"
