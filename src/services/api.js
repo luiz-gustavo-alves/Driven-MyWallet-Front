@@ -16,10 +16,17 @@ const getTransactions = (token) => {
     return axios.get(`${BASE_URL}/home`, config);
 };
 
+const newTransaction = (body, type, token) => {
+
+    const config = createConfig(token);
+    return axios.post(`${BASE_URL}/nova-transacao/${type}`, body, config);
+}
+
 const API = {
     signIn,
     signUp,
-    getTransactions
+    getTransactions,
+    newTransaction
 }
 
 export default API;

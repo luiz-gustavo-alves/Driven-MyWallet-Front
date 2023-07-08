@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Container = styled.div`
 
     width: 100%;
-    height: 446px;
+    height: 70%;
     border-radius: 8px;
     background-color: #fff;
     padding: 10px;
@@ -16,6 +16,8 @@ const Content = styled.ul`
 
     display: flex;
     flex-direction: column;
+    max-height: 85%;
+    overflow-y: auto;
 `;
 
 const Transaction = styled.li`
@@ -55,7 +57,7 @@ const Value = styled.p`
             return props.type === "entrada" ? "#03AC00" : "#C70000";
         }
         
-        if (props.total) {
+        else if (props.total) {
             return props.total >= 0 ? "#03AC00" : "#C70000";
         } 
     }};

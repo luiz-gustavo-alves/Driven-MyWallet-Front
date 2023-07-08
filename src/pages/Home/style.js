@@ -1,16 +1,17 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
 
+    padding: 35px 18px;
+    margin: auto;
+    max-width: 600px;
+    min-width: 376px;
+    user-select: none;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    padding: 35px 18px;
-    max-width: 600px;
-    margin: 0 auto;
-    user-select: none;
+    justify-content: center;
 `;
 
 const UserContent = styled.div`
@@ -35,11 +36,54 @@ const Button = styled.button`
     background: inherit;
     border: none;
     cursor: pointer;
+
+    &:hover {
+        opacity: 0.7;
+    }
 `;
+
+const Footer = styled.div`
+
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 15px;
+`;
+
+const Option = styled.div`
+
+    width: 156px;
+    height: 114px;
+    border-radius: 8px;
+    background-color: #A328D6;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 12px;
+`;
+
+const StyledLink = styled(Link)`
+
+    p {
+        font-size: 17px;
+        line-height: 23px;
+        font-weight: 500;
+        width: 50%;
+    }
+
+    &:hover {
+        opacity: 0.7;
+    }
+
+`; 
 
 export {
     Container,
     UserContent,
     Title,
-    Button
+    Button,
+    Footer,
+    Option,
+    StyledLink
 }
