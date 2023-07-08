@@ -16,7 +16,7 @@ export default function Transactions(props) {
                   <Date>{transaction.date}</Date>
                   <Title data-test="registry-name">{transaction.description}</Title>
                 </LeftContent>
-                <Value type={transaction.type} data-test="registry-amount">{transaction.value.toFixed(2)}</Value>
+                <Value type={transaction.type} data-test="registry-amount">{(transaction.value.toFixed(2)).replace(".", ",")}</Value>
               </Transaction>
             ))}
           </Content>
@@ -24,7 +24,7 @@ export default function Transactions(props) {
           <Footer>
             {"SALDO"}
             <Value total={total} data-test="total-amount">
-              {total.toFixed(2)}
+              {(total.toFixed(2)).replace(".", ",")}
             </Value>
           </Footer>
         </>

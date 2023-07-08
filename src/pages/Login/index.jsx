@@ -47,6 +47,7 @@ export default function Login() {
       <Form onSubmit={submitForm} page="auth">
         <Input
           data-test="email"
+          type="email"
           name="email"
           placeholder="E-mail"
           value={formData.email}

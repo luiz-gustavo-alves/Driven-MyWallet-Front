@@ -48,6 +48,7 @@ export default function Register() {
         <Input
           data-test="name"
           placeholder="Nome"
+          type="text"
           name="name"
           value={formData.name}
           onChange={updateForm}
@@ -56,6 +57,7 @@ export default function Register() {
         <Input
           data-test="email"
           placeholder="E-mail"
+          type="email"
           name="email"
           value={formData.email}
           onChange={updateForm}
