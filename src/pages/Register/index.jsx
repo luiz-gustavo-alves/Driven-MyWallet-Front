@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Form, Input, Button, StyledLink } from "../../components/AuthComponents";
 
 import API from "../../services/api";
@@ -6,6 +7,7 @@ import API from "../../services/api";
 export default function Register() {
 
   const [formData, setFormData] = useState({ name: "", email: "", password: "", confirmPassword: "" });
+  const navigate = useNavigate();
 
   const updateForm = (e) => {
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -19,15 +21,12 @@ export default function Register() {
 
     } else {
 
-      const sendData = formData;
-      delete sendData.confirmPassword
-
-      API.signUp({...sendData})
-        .then(res => console.log(res))
+      API.signUp({...formData})
+        .then(() => navigate("/"))
         .catch(err => {
 
           if (err.response.status === 422) {
-            alert("Campo invalido ou vazio.");
+            alert("Campo(s) invalido(s) ou vazio(s).");
 
           } else if (err.response.status === 409) {
             alert("E-mail já cadastrado.");

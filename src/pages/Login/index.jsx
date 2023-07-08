@@ -27,7 +27,7 @@ export default function Login() {
       .catch(err => {
 
         if (err.response.status === 422) {
-          alert("Campo invalido ou vazio.");
+          alert("Campo(s) invalido(s) ou vazio(s).");
 
         } else if (err.response.status === 401 || err.response.status === 404) {
           alert("E-mail ou senha incorretos.");
