@@ -14,7 +14,6 @@ export default function UpdateTransaction() {
     const { setTransactionOp } = useTransactionOp();
     const params = useParams();
     const navigate = useNavigate();
-
     const [formData, setFormData] = useState(null);
 
     const updateForm = (e) => {

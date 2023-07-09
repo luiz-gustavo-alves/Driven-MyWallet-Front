@@ -59,7 +59,8 @@ export default function Transactions(props) {
                     data-test="registry-name" 
                     onClick={() => editTransaction(transaction, index)}
                     title="Editar registro"
-                  >{transaction.description}</Title>
+                    >{transaction.description}
+                  </Title>
                 </LeftContent>
 
                 <RightContent>
@@ -67,7 +68,12 @@ export default function Transactions(props) {
                     type={transaction.type} 
                     data-test="registry-amount"
                   >{(transaction.value.toFixed(2)).replace(".", ",")}</Value>
-                  <Button onClick={() => deleteTransaction(index)}>{"x"}</Button>
+                  <Button
+                    data-test="registry-delete"
+                    onClick={() => deleteTransaction(index)}
+                    title="Apagar registro"
+                    >{"x"}
+                  </Button>
                 </RightContent>
               </Transaction>
             ))}
