@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { Container, UserContent, Title, Button, Footer, Option, StyledLink } from "./style";
 import Transactions from "./Transactions";
 import useAuth from "../../hooks/useAuth";
+import useTransactionOp from "../../hooks/useTransactionOp";
 import { exit_door, minus, plus } from "../../assets/images";
 import API from "../../services/api";
 
 export default function Home() {
 
   const { auth } = useAuth();
+  const { transactionOp } = useTransactionOp();
   const navigate = useNavigate();
   const [transactions, setTrasactions] = useState(null);
 
@@ -24,7 +26,7 @@ export default function Home() {
         .catch((err) => alert(err.message));
     }
 
-  }, [transactions]);
+  }, [transactionOp, ]);
 
   const logout = () => {
 

@@ -1,11 +1,13 @@
 import { Container, Transaction, Content, LeftContent, Day, Title, RightContent, Value, Button, Footer, Default } from "./style";
 import API from "../../../services/api";
 import useAuth from "../../../hooks/useAuth";
+import useTransactionOp from "../../../hooks/useTransactionOp";
 
 export default function Transactions(props) {
 
   const { total, transactions } = props.transactions;
   const { auth } = useAuth();
+  const { setTransactionOp } = useTransactionOp();
 
   const deleteTransaction = (index) => {
 
@@ -15,6 +17,7 @@ export default function Transactions(props) {
 
     const transactionIndex = (transactions.length - 1) - index;
     API.deleteTransaction(transactionIndex, auth.token)
+      .then(() => setTransactionOp({ delete: true }))
       .catch((err) => {
 
         if (err.response.status === 403) {
