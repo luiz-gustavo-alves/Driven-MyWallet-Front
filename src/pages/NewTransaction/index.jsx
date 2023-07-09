@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Form, Input, Button } from "../../components/FormComponents";
-import { Container, Title } from "./style";
+import { Container, Title } from "../../components/TransactionOpComponents";
+import { formatValueFloat } from "../../utils";
 import API from "../../services/api";
 import useAuth from "../../hooks/useAuth";
 
@@ -21,12 +22,7 @@ export default function NewTransaction() {
 
     e.preventDefault();
 
-    if (formData.value.includes(",")) {
-      formData.value = formData.value.replace(",", ".");
-    }
-
-    formData.value = Number(formData.value).toFixed(2);
-    formData.value = Number(formData.value);
+    formData.value = formatValueFloat(formData.value);
 
     API.newTransaction({...formData}, params.tipo, auth.token)
       .then(() => navigate("/home"))
@@ -37,6 +33,8 @@ export default function NewTransaction() {
 
         } else {
           alert(err.message);
+          localStorage.removeItem("auth");
+          navigate("/");
         }
       });
   }

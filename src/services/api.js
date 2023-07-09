@@ -28,12 +28,26 @@ const deleteTransaction = (index, token) => {
     return axios.delete(`${BASE_URL}/deletar-transacao/${index}`, config);
 }
 
+const getTransactionByIndex = (type, index, token) => {
+
+    const config = createConfig(token);
+    return axios.get(`${BASE_URL}/editar-registro/${type}/${index}`, config)
+}
+
+const updateTransaction = (body, type, index, token) => {
+    
+    const config = createConfig(token);
+    return axios.put(`${BASE_URL}/editar-registro/${type}/${index}`, body, config)
+}
+
 const API = {
     signIn,
     signUp,
     getTransactions,
     newTransaction,
-    deleteTransaction
+    deleteTransaction,
+    getTransactionByIndex,
+    updateTransaction
 }
 
 export default API;

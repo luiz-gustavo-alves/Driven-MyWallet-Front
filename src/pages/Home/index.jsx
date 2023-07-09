@@ -23,7 +23,11 @@ export default function Home() {
 
       API.getTransactions(auth.token)
         .then((res) => setTrasactions(res.data))
-        .catch((err) => alert(err.message));
+        .catch((err) => {
+          alert(err.message);
+          localStorage.removeItem("auth");
+          navigate("/");
+        });
     }
 
   }, [transactionOp, ]);

@@ -2,12 +2,18 @@ import { Container, Transaction, Content, LeftContent, Day, Title, RightContent,
 import API from "../../../services/api";
 import useAuth from "../../../hooks/useAuth";
 import useTransactionOp from "../../../hooks/useTransactionOp";
+import { useNavigate } from "react-router-dom";
 
 export default function Transactions(props) {
 
   const { total, transactions } = props.transactions;
   const { auth } = useAuth();
   const { setTransactionOp } = useTransactionOp();
+  const navigate = useNavigate();
+
+  const getTransactionIndex = (index) => {
+    return (transactions.length - 1) - index;
+  }
 
   const deleteTransaction = (index) => {
 
@@ -15,9 +21,10 @@ export default function Transactions(props) {
       return;
     }
 
-    const transactionIndex = (transactions.length - 1) - index;
+    const transactionIndex = getTransactionIndex(index);
+
     API.deleteTransaction(transactionIndex, auth.token)
-      .then(() => setTransactionOp({ delete: true }))
+      .then(() => setTransactionOp({ operation: "delete" }))
       .catch((err) => {
 
         if (err.response.status === 403) {
@@ -25,8 +32,16 @@ export default function Transactions(props) {
 
         } else {
           alert(err.message);
+          localStorage.removeItem("auth");
+          navigate("/");
         }
       });
+  }
+
+  const editTransaction = (transaction, index) => {
+
+    const transactionIndex = getTransactionIndex(index);
+    navigate(`/editar-registro/${transaction.type}/${transactionIndex}`);
   }
 
   return (
@@ -37,12 +52,21 @@ export default function Transactions(props) {
           <Content>
             {transactions.map((transaction, index) => (
               <Transaction key={index}>
+                
                 <LeftContent>
                   <Day>{transaction.date}</Day>
-                  <Title data-test="registry-name">{transaction.description}</Title>
+                  <Title 
+                    data-test="registry-name" 
+                    onClick={() => editTransaction(transaction, index)}
+                    title="Editar registro"
+                  >{transaction.description}</Title>
                 </LeftContent>
+
                 <RightContent>
-                  <Value type={transaction.type} data-test="registry-amount">{(transaction.value.toFixed(2)).replace(".", ",")}</Value>
+                  <Value 
+                    type={transaction.type} 
+                    data-test="registry-amount"
+                  >{(transaction.value.toFixed(2)).replace(".", ",")}</Value>
                   <Button onClick={() => deleteTransaction(index)}>{"x"}</Button>
                 </RightContent>
               </Transaction>
