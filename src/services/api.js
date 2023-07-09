@@ -22,11 +22,18 @@ const newTransaction = (body, type, token) => {
     return axios.post(`${BASE_URL}/nova-transacao/${type}`, body, config);
 }
 
+const deleteTransaction = (index, token) => {
+
+    const config = createConfig(token);
+    return axios.delete(`${BASE_URL}/deletar-transacao/${index}`, config);
+}
+
 const API = {
     signIn,
     signUp,
     getTransactions,
-    newTransaction
+    newTransaction,
+    deleteTransaction
 }
 
 export default API;

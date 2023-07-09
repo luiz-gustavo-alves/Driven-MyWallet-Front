@@ -24,7 +24,7 @@ export default function Home() {
         .catch((err) => alert(err.message));
     }
 
-  }, []);
+  }, [transactions]);
 
   const logout = () => {
 

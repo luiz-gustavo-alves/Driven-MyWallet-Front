@@ -32,10 +32,10 @@ const LeftContent = styled.div`
 
     display: flex;
     align-items: center;
-    width: 80%;
+    width: 75%;
 `;
 
-const Date = styled.p`
+const Day = styled.p`
 
     color: #C6C6C6;
     margin-right: 10px;
@@ -46,6 +46,14 @@ const Title = styled.p`
     font-weight: 500;
     color: #000;
     word-break: break-word;
+    cursor: pointer;
+`;
+
+const RightContent = styled.div`
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
 `;
 
 const Value = styled.p`
@@ -55,12 +63,25 @@ const Value = styled.p`
        
         if (props.type) {
             return props.type === "entrada" ? "#03AC00" : "#C70000";
-        }
-        
-        else if (props.total) {
+
+        } else if (props.total) {
             return props.total >= 0 ? "#03AC00" : "#C70000";
-        } 
+        }
     }};
+`;
+
+const Button = styled.button`
+
+    border: none;
+    background-color: inherit;
+    font-weight: 500;
+    color: #C6C6C6;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:hover {
+        color: #000;
+    }
 `;
 
 const Footer = styled.div`
@@ -89,9 +110,11 @@ export {
     Content,
     Transaction,
     LeftContent,
-    Date,
+    Day,
     Title,
+    RightContent,
     Value,
+    Button,
     Footer,
     Default
 }

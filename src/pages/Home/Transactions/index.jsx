@@ -1,8 +1,30 @@
-import { Container, Transaction, Content, LeftContent, Date, Title, Value, Footer, Default } from "./style";
+import { Container, Transaction, Content, LeftContent, Day, Title, RightContent, Value, Button, Footer, Default } from "./style";
+import API from "../../../services/api";
+import useAuth from "../../../hooks/useAuth";
 
 export default function Transactions(props) {
 
   const { total, transactions } = props.transactions;
+  const { auth } = useAuth();
+
+  const deleteTransaction = (index) => {
+
+    if (!window.confirm("Tem certeza de que quer excluir esta transação?")) {
+      return;
+    }
+
+    const transactionIndex = (transactions.length - 1) - index;
+    API.deleteTransaction(transactionIndex, auth.token)
+      .catch((err) => {
+
+        if (err.response.status === 403) {
+          alert("Operação invalida.");
+
+        } else {
+          alert(err.message);
+        }
+      });
+  }
 
   return (
     <Container>
@@ -13,10 +35,13 @@ export default function Transactions(props) {
             {transactions.map((transaction, index) => (
               <Transaction key={index}>
                 <LeftContent>
-                  <Date>{transaction.date}</Date>
+                  <Day>{transaction.date}</Day>
                   <Title data-test="registry-name">{transaction.description}</Title>
                 </LeftContent>
-                <Value type={transaction.type} data-test="registry-amount">{(transaction.value.toFixed(2)).replace(".", ",")}</Value>
+                <RightContent>
+                  <Value type={transaction.type} data-test="registry-amount">{(transaction.value.toFixed(2)).replace(".", ",")}</Value>
+                  <Button onClick={() => deleteTransaction(index)}>{"x"}</Button>
+                </RightContent>
               </Transaction>
             ))}
           </Content>
