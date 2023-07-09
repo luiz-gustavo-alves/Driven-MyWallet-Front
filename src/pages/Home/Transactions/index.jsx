@@ -11,6 +11,12 @@ export default function Transactions(props) {
   const { setTransactionOp } = useTransactionOp();
   const navigate = useNavigate();
 
+  const formatTotal = (total) => {
+    
+    return (total >= 0) ? 
+      (total.toFixed(2)).replace(".", ",") : ((total.toFixed(2)).replace(".", ",")).replace("-", "");
+  }
+
   const getTransactionIndex = (index) => {
     return (transactions.length - 1) - index;
   }
@@ -82,7 +88,7 @@ export default function Transactions(props) {
           <Footer>
             {"SALDO"}
             <Value total={total} data-test="total-amount">
-              {(total.toFixed(2)).replace(".", ",")}
+              {formatTotal(total)}
             </Value>
           </Footer>
         </>
