@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { Form, Input, Button } from "../../components/FormComponents";
+import { Form, Input, Button, Loader } from "../../components/FormComponents";
 import { Container, Title } from "../../components/TransactionOpComponents";
 import { formatValueFloat } from "../../utils";
+import { ThreeDots } from "react-loader-spinner";
 import API from "../../services/api";
 import useAuth from "../../hooks/useAuth";
 
 export default function NewTransaction() {
 
   const [formData, setFormData] = useState({ value: "", description: "" });
+  const [disableForm, setDisableForm] = useState(null);
   const { auth } = useAuth();
   const params = useParams();
   const navigate = useNavigate();
@@ -21,12 +23,18 @@ export default function NewTransaction() {
   const submitForm = (e) => {
 
     e.preventDefault();
+    setDisableForm(true);
 
-    formData.value = formatValueFloat(formData.value);
+    const formatedValue = formatValueFloat(formData.value);
+    if (Number(formatedValue)) {
+      formData.value = formatedValue;
+    }
 
     API.newTransaction({...formData}, params.tipo, auth.token)
       .then(() => navigate("/home"))
       .catch(err => {
+
+        setDisableForm(false);
 
         if (err.response.status === 422) {
           alert("Campo(s) invalido(s) ou vazio(s).")
@@ -62,7 +70,8 @@ export default function NewTransaction() {
           onChange={updateForm}
         />
 
-        <Input 
+        <Input
+          maxLength={100}
           data-test="registry-name-input"
           placeholder="Descrição"
           name="description"
@@ -70,9 +79,23 @@ export default function NewTransaction() {
           onChange={updateForm}
         />
 
-        <Button type="submit" data-test="registry-save">
-          {`Salvar ${params.tipo}`}
+        <Button 
+          type="submit" 
+          data-test="registry-save"
+          disabled={disableForm}
+          title={`Salvar ${params.tipo}`}>
+          {disableForm ? "" : `Salvar ${params.tipo}`}
         </Button>
+        <Loader page="option">
+          <ThreeDots
+            height="45"
+            width="80"
+            radius="9"
+            color="#fff"
+            ariaLabel="three-dots-loading"
+            visible={disableForm}
+          />
+        </Loader>
       </Form>
     </Container>
   );

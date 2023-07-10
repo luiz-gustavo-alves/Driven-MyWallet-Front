@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Form, Input, Button, StyledLink } from "../../components/FormComponents";
-
+import { Container, Form, Input, Button, StyledLink, Loader } from "../../components/FormComponents";
+import { ThreeDots } from "react-loader-spinner";
 import API from "../../services/api";
 
 export default function Register() {
 
   const [formData, setFormData] = useState({ name: "", email: "", password: "", confirmPassword: "" });
+  const [disableForm, setDisableForm] = useState(false);
   const navigate = useNavigate();
 
   const updateForm = (e) => {
@@ -15,6 +16,7 @@ export default function Register() {
 
   const submitForm = (e) => {
     e.preventDefault();
+    setDisableForm(true)
 
     if (formData.password !== formData.confirmPassword) {
       alert("As senhas digitadas não coincidem!");
@@ -25,6 +27,8 @@ export default function Register() {
         .then(() => navigate("/"))
         .catch(err => {
 
+          setDisableForm(false);
+
           if (err.response.status === 422) {
             alert("Campo(s) invalido(s) ou vazio(s).");
 
@@ -33,6 +37,11 @@ export default function Register() {
 
           } else {
             alert(err.message);
+
+            if (localStorage.getItem("auth")) {
+              localStorage.removeItem("auth");
+            }
+            navigate("/");
           }
         });
     }
@@ -46,6 +55,7 @@ export default function Register() {
 
       <Form onSubmit={submitForm} page="auth">
         <Input
+          maxLength={50}
           data-test="name"
           placeholder="Nome"
           type="text"
@@ -55,6 +65,7 @@ export default function Register() {
         />
 
         <Input
+          maxLength={254}
           data-test="email"
           placeholder="E-mail"
           type="email"
@@ -64,6 +75,7 @@ export default function Register() {
         />
 
         <Input
+          maxLength={256}
           data-test="password"
           placeholder="Senha"
           name="password"
@@ -73,6 +85,7 @@ export default function Register() {
         />
 
         <Input
+          maxLength={256}
           data-test="conf-password"
           placeholder="Confirme a senha"
           name="confirmPassword"
@@ -81,9 +94,23 @@ export default function Register() {
           onChange={updateForm}
         />
 
-        <Button type="submit" data-test="sign-up-submit">
-          {"Cadastrar"}
-          </Button>
+        <Button 
+          type="submit" 
+          data-test="sign-up-submit"
+          title="Cadastrar"
+          disabled={disableForm}>
+          {disableForm ? "" : "Cadastrar"}
+        </Button>
+        <Loader page="auth">
+          <ThreeDots
+            height="45"
+            width="80"
+            radius="9"
+            color="#fff"
+            ariaLabel="three-dots-loading"
+            visible={disableForm}
+          />
+        </Loader>
       </Form>
 
       <StyledLink to="/">

@@ -11,7 +11,11 @@ const Button = styled.button`
     font-size: 20px;
     font-weight: 700;
     color: #fff;
-    cursor: pointer;
+    cursor: ${props => props.disabled ? "not-allowed" : "pointer"};
+
+    &:hover {
+        opacity: 0.7;
+    }
 `;
 
 export default Button;

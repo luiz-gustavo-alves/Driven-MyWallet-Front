@@ -87,7 +87,7 @@ export default function Transactions(props) {
 
           <Footer>
             {"SALDO"}
-            <Value total={total} data-test="total-amount">
+            <Value total={total} data-test="total-amount" title="Saldo total">
               {formatTotal(total)}
             </Value>
           </Footer>

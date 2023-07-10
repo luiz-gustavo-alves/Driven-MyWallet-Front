@@ -47,6 +47,10 @@ const Title = styled.p`
     color: #000;
     word-break: break-word;
     cursor: pointer;
+
+    &:hover {
+        opacity: 0.7;
+    }
 `;
 
 const RightContent = styled.div`

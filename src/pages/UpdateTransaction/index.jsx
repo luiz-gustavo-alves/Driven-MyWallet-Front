@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { Form, Input, Button } from "../../components/FormComponents";
+import { Form, Input, Button, Loader } from "../../components/FormComponents";
 import { Container, Title } from "../../components/TransactionOpComponents";
+import { CenterLoader } from "./style";
+import { Oval, ThreeDots } from "react-loader-spinner";
 import useAuth from "../../hooks/useAuth";
 import useTransactionOp from "../../hooks/useTransactionOp";
 import API from "../../services/api";
@@ -15,6 +17,7 @@ export default function UpdateTransaction() {
     const params = useParams();
     const navigate = useNavigate();
     const [formData, setFormData] = useState(null);
+    const [disableForm, setDisableForm] = useState(null);
 
     const updateForm = (e) => {
       setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,8 +25,12 @@ export default function UpdateTransaction() {
 
     const submitForm = (e) => {
       e.preventDefault();
+      setDisableForm(true);
 
-      formData.value = formatValueFloat(formData.value);
+      const formatedValue = formatValueFloat(formData.value);
+      if (Number(formatedValue)) {
+        formData.value = formatedValue;
+      }
 
       API.updateTransaction({...formData}, params.tipo, params.id, auth.token)
         .then(() => {
@@ -31,6 +38,8 @@ export default function UpdateTransaction() {
           navigate("/home");
         })
         .catch((err) => {
+
+          setDisableForm(false);
 
           if (err.response.status === 422) {
             alert("Campo(s) invalido(s) ou vazio(s).")
@@ -64,7 +73,20 @@ export default function UpdateTransaction() {
     }, []);
 
     if (formData === null) {
-      return <h1>Carregando...</h1>
+      return (
+        <CenterLoader>
+          <Oval
+            height="200"
+            width="200"
+            color="#fff"
+            ariaLabel='oval-loading'
+            secondaryColor="#fff"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+            visible={true}
+          />
+        </CenterLoader>
+      );
     }
 
     return (
@@ -82,7 +104,8 @@ export default function UpdateTransaction() {
             onChange={updateForm}
           />
   
-          <Input 
+          <Input
+            maxLength={100}
             data-test="registry-name-input"
             placeholder="Descrição"
             name="description"
@@ -90,9 +113,23 @@ export default function UpdateTransaction() {
             onChange={updateForm}
           />
   
-          <Button type="submit" data-test="registry-save">
-            {`Atualizar ${params.tipo}`}
+          <Button 
+            type="submit"
+            data-test="registry-save"
+            disabled={disableForm}
+            title={`Atualizar ${params.tipo}`}>
+            {disableForm ? "" : `Atualizar ${params.tipo}`}
           </Button>
+          <Loader page="option">
+            <ThreeDots
+              height="45"
+              width="80"
+              radius="9"
+              color="#fff"
+              ariaLabel="three-dots-loading"
+              visible={disableForm}
+            />
+          </Loader>
         </Form>
       </Container>
     );

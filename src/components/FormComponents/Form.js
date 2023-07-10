@@ -8,6 +8,8 @@ const Form = styled.form`
     max-width: 600px;
     gap: 15px;
 
+    position: relative;
+
     ${(props) => {
 
         switch (props.page) {

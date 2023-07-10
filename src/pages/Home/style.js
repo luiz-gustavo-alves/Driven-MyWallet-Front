@@ -76,7 +76,15 @@ const StyledLink = styled(Link)`
         opacity: 0.7;
     }
 
-`; 
+`;
+
+const Loader = styled.div`
+
+    position: absolute;
+    top: 50%;  
+    left: 50%;
+    transform: translate(-50%, -50%);
+`;
 
 export {
     Container,
@@ -85,5 +93,6 @@ export {
     Button,
     Footer,
     Option,
-    StyledLink
+    StyledLink,
+    Loader
 }

@@ -16,6 +16,10 @@ const Input = styled.input`
     &:focus {
         outline: 2px solid #000;
     }
+
+    &:hover {
+        outline: 2px solid #000;
+    }
 `;
 
 export default Input;

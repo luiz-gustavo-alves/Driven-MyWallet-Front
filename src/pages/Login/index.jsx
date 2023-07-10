@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Container, Form, Input, Button, StyledLink } from "../../components/FormComponents";
+import { Container, Form, Input, Button, StyledLink, Loader } from "../../components/FormComponents";
+import { ThreeDots } from "react-loader-spinner";
 
 import API from "../../services/api";
 import useAuth from "../../hooks/useAuth";
@@ -8,6 +9,7 @@ import useAuth from "../../hooks/useAuth";
 export default function Login() {
 
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [disableForm, setDisableForm] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -17,6 +19,7 @@ export default function Login() {
 
   const submitForm = async (e) => {
     e.preventDefault();
+    setDisableForm(true);
 
     API.signIn({...formData})
       .then(res => {
@@ -26,6 +29,8 @@ export default function Login() {
       })
       .catch(err => {
 
+        setDisableForm(false);
+
         if (err.response.status === 422) {
           alert("Campo(s) invalido(s) ou vazio(s).");
 
@@ -34,7 +39,13 @@ export default function Login() {
 
         } else {
           alert(err.message);
+
+          if (localStorage.getItem("auth")) {
+            localStorage.removeItem("auth");
+          }
+          navigate("/");
         }
+
       });
   }
 
@@ -46,6 +57,7 @@ export default function Login() {
 
       <Form onSubmit={submitForm} page="auth">
         <Input
+          maxLength={254}
           data-test="email"
           type="email"
           name="email"
@@ -55,6 +67,7 @@ export default function Login() {
         />
 
         <Input
+          maxLength={256}
           data-test="password"
           type="password"
           name="password"
@@ -63,9 +76,23 @@ export default function Login() {
           onChange={updateForm}
         />
 
-        <Button type="submit" data-test="sign-in-submit">
-          {"Entrar"}
+        <Button 
+          type="submit" 
+          data-test="sign-in-submit"
+          title="Login"
+          disabled={disableForm}>
+          {disableForm ? "" : "Entrar"}
         </Button>
+        <Loader page="auth">
+          <ThreeDots
+            height="45"
+            width="80"
+            radius="9"
+            color="#fff"
+            ariaLabel="three-dots-loading"
+            visible={disableForm}
+          />
+        </Loader>
       </Form>
 
       <StyledLink to="/cadastro">

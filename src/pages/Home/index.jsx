@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, UserContent, Title, Button, Footer, Option, StyledLink } from "./style";
+import { Container, UserContent, Title, Button, Footer, Option, StyledLink, Loader } from "./style";
 import Transactions from "./Transactions";
 import useAuth from "../../hooks/useAuth";
 import useTransactionOp from "../../hooks/useTransactionOp";
 import { exit_door, minus, plus } from "../../assets/images";
+import { Oval } from "react-loader-spinner";
 import API from "../../services/api";
 
 export default function Home() {
@@ -24,6 +25,7 @@ export default function Home() {
       API.getTransactions(auth.token)
         .then((res) => setTrasactions(res.data))
         .catch((err) => {
+
           alert(err.message);
           localStorage.removeItem("auth");
           navigate("/");
@@ -39,7 +41,20 @@ export default function Home() {
   }
 
   if (transactions === null) {
-    return <h1>Carregando...</h1>
+    return (
+      <Loader>
+        <Oval
+          height="200"
+          width="200"
+          color="#fff"
+          ariaLabel='oval-loading'
+          secondaryColor="#fff"
+          strokeWidth={2}
+          strokeWidthSecondary={2}
+          visible={true}
+        />
+      </Loader>
+    );
   }
 
   return (
@@ -59,7 +74,7 @@ export default function Home() {
             <img src={plus}></img>
           </Button>
 
-          <StyledLink to="/nova-transacao/entrada" title="Nova Entrada">
+          <StyledLink to="/nova-transacao/entrada">
             <p>Nova Entrada</p>
           </StyledLink>
         </Option>
@@ -69,7 +84,7 @@ export default function Home() {
             <img src={minus}></img>
           </Button>
 
-          <StyledLink to="/nova-transacao/saida" title="Nova Saída">
+          <StyledLink to="/nova-transacao/saida">
             <p>Nova Saída</p>
           </StyledLink>
         </Option>
