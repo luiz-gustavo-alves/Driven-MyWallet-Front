@@ -33,4 +33,4 @@ https://github.com/luiz-gustavo-alves/Driven-MyWallet-Front/assets/114351018/9e9
 
 | Plataforma | Deploy |
 | --- | --- |
-| <a href="https://vercel.com/"><img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" /></a> | my-wallet-pied-seven.vercel.app
+| <a href="https://vercel.com/"><img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" /></a> | https://my-wallet-pied-seven.vercel.app
