@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Form, Input, Button, Loader } from "../../components/FormComponents";
-import { Container, Title } from "../../components/TransactionOpComponents";
+import { Container, TopContent, ReturnButton, Title } from "../../components/TransactionOpComponents";
 import { formatValueFloat } from "../../utils";
 import { ThreeDots } from "react-loader-spinner";
+import { return_sign } from "../../assets/images";
 import API from "../../services/api";
 import useAuth from "../../hooks/useAuth";
 
@@ -57,9 +58,14 @@ export default function NewTransaction() {
 
   return (
     <Container>
-      <Title>
-        {`Nova ${params.tipo}`}
-      </Title>
+      <TopContent>
+        <Title>
+          {`Nova ${params.tipo}`}
+        </Title>
+        <ReturnButton onClick={() => navigate("/home")}>
+          <img src={return_sign} title="Retornar" />
+        </ReturnButton>
+      </TopContent>
 
       <Form onSubmit={submitForm} page="option">
         <Input

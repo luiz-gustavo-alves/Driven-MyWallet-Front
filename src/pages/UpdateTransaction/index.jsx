@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Form, Input, Button, Loader } from "../../components/FormComponents";
-import { Container, Title } from "../../components/TransactionOpComponents";
+import { Container, TopContent, ReturnButton, Title } from "../../components/TransactionOpComponents";
 import { CenterLoader } from "./style";
 import { Oval, ThreeDots } from "react-loader-spinner";
 import useAuth from "../../hooks/useAuth";
 import useTransactionOp from "../../hooks/useTransactionOp";
 import API from "../../services/api";
+import { return_sign } from "../../assets/images/";
 import { formatValueFloat } from "../../utils";
 
 export default function UpdateTransaction() {
@@ -91,9 +92,14 @@ export default function UpdateTransaction() {
 
     return (
       <Container>
-        <Title>
-          {`Editar ${params.tipo}`}
-        </Title>
+        <TopContent>
+          <Title>
+            {`Editar ${params.tipo}`}
+          </Title>
+          <ReturnButton onClick={() => navigate("/home")}>
+            <img src={return_sign} title="Retornar" />
+          </ReturnButton>
+        </TopContent>
   
         <Form onSubmit={submitForm} page="option">
           <Input
